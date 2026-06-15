@@ -1,4 +1,4 @@
-name: Deploy version catalog to Maven Central
+name: Deploy all to Maven Central
 on:
   push:
     tags:

@@ -1,4 +1,4 @@
-name: Deploy version catalog to Maven Central
+name: Deploy Nordic BOM to Maven Central
 on:
   workflow_dispatch:
 jobs:
