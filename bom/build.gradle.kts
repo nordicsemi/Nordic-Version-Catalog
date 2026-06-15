@@ -38,7 +38,7 @@ apply(from = "../gradle/git-tag-version.gradle")
 
 val getVersionNameFromTags: groovy.lang.Closure<String> by ext
 
-group = "no.nordicsemi.android"
+group = "no.nordicsemi.gradle"
 version = getVersionNameFromTags()
 
 dependencies {
@@ -89,11 +89,12 @@ publishing {
     publications {
         create<MavenPublication>("bom") {
             from(components["javaPlatform"])
+            artifactId = "nordic-bom"
 
             pom {
-                name.set("Nordic BOM for Android")
-                description.set("The platform BOM with Android libraries by Nordic.")
-                url.set("https://github.com/NordicSemiconductor/Android-Version-Catalog")
+                name.set("Nordic BOM")
+                description.set("The platform BOM with libraries by Nordic.")
+                url.set("https://github.com/nordicsemi/Nordic-Version-Catalog")
 
                 // https://maven.apache.org/pom.html#licenses
                 licenses {
@@ -106,9 +107,9 @@ publishing {
 
                 // https://maven.apache.org/pom.html#scm
                 scm {
-                    url.set("https://github.com/NordicSemiconductor/Android-Version-Catalog")
-                    connection.set("scm:git@github.com:NordicSemiconductor/Android-Version-Catalog.git")
-                    developerConnection.set("scm:git@github.com:NordicSemiconductor/Android-Version-Catalog.git")
+                    url.set("https://github.com/nordicsemi/Nordic-Version-Catalog")
+                    connection.set("scm:git@github.com:nordicsemi/Nordic-Version-Catalog.git")
+                    developerConnection.set("scm:git@github.com:nordicsemi/Nordic-Version-Catalog.git")
                 }
 
                 // https://maven.apache.org/pom.html#organization
