@@ -3,7 +3,7 @@ blek = "2.0.0-alpha19" # https://github.com/nordicsemi/Kotlin-BLE-Library
 ble = "2.11.0"         # https://github.com/nordicsemi/Android-BLE-Library
 dfu = "2.11.0"         # https://github.com/nordicsemi/Android-DFU-Library
 log = "2.5.0"          # https://github.com/nordicsemi/nRF-Logger-API
-util = "1.1.0"         # https://github.com/nordicsemi/Kotlin-Util-Library
+util = "1.2.0"         # https://github.com/nordicsemi/Kotlin-Util-Library
 wifi = "1.3.0"         # https://github.com/nordicsemi/Android-nRF-Wi-Fi-Provisioner
 mcumgr = "2.8.0"       # https://github.com/nordicsemi/Android-nRF-Connect-Device-Manager
 scanner = "1.6.0"      # https://github.com/nordicsemi/Android-Scanner-Compat-Library
@@ -46,6 +46,7 @@ log-timber = { group = "no.nordicsemi.android", name = "log-timber", version.ref
 # Utils
 kotlin-id = { group = "no.nordicsemi.kotlin", name = "id", version.ref = "util" }
 kotlin-log = { group = "no.nordicsemi.kotlin", name = "log", version.ref = "util" }
+kotlin-log-timber = { group = "no.nordicsemi.kotlin", name = "log-timber", version.ref = "util" }
 kotlin-data = { group = "no.nordicsemi.kotlin", name = "data", version.ref = "util" }
 
 # Nordic Common Libraries
