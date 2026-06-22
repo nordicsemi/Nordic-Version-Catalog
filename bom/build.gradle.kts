@@ -65,6 +65,7 @@ dependencies {
         api(libs.log.timber)
         api(libs.kotlin.id)
         api(libs.kotlin.log)
+        api(libs.kotlin.log.timber)
         api(libs.kotlin.data)
         api(libs.core)
         api(libs.ui)
