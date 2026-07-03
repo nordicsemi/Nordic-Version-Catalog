@@ -5,7 +5,7 @@ dfu = "2.11.0"         # https://github.com/nordicsemi/Android-DFU-Library
 log = "2.5.0"          # https://github.com/nordicsemi/nRF-Logger-API
 util = "1.2.0"         # https://github.com/nordicsemi/Kotlin-Util-Library
 wifi = "1.3.0"         # https://github.com/nordicsemi/Android-nRF-Wi-Fi-Provisioner
-mcumgr = "2.9.0"       # https://github.com/nordicsemi/Android-nRF-Connect-Device-Manager
+mcumgr = "3.3.0"       # https://github.com/nordicsemi/Android-nRF-Connect-Device-Manager
 scanner = "1.6.0"      # https://github.com/nordicsemi/Android-Scanner-Compat-Library
 common = "2.11.0"      # https://github.com/nordicsemi/Android-Common-Libraries
 memfault = "2.0.2"     # https://github.com/nordicsemi/Android-Memfault-Library
@@ -38,6 +38,8 @@ dfu = { group = "no.nordicsemi.android", name = "dfu", version.ref = "dfu" }
 # MCUmgr and DFU for nRF Connect SDK
 mcumgr-core = { group = "no.nordicsemi.android", name = "mcumgr-core", version.ref = "mcumgr" }
 mcumgr-ble = { group = "no.nordicsemi.android", name = "mcumgr-ble", version.ref = "mcumgr" }
+mcumgr-ota = { group = "no.nordicsemi.android", name = "ota", version.ref = "mcumgr" }
+mcumgr-observability = { group = "no.nordicsemi.android", name = "observability", version.ref = "mcumgr" }
 
 # Logging
 log = { group = "no.nordicsemi.android", name = "log", version.ref = "log" }
