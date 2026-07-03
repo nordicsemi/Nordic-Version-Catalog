@@ -7,7 +7,7 @@ util = "1.2.0"         # https://github.com/nordicsemi/Kotlin-Util-Library
 wifi = "1.3.0"         # https://github.com/nordicsemi/Android-nRF-Wi-Fi-Provisioner
 mcumgr = "2.9.0"       # https://github.com/nordicsemi/Android-nRF-Connect-Device-Manager
 scanner = "1.6.0"      # https://github.com/nordicsemi/Android-Scanner-Compat-Library
-common = "2.10.0"      # https://github.com/nordicsemi/Android-Common-Libraries
+common = "2.11.0"      # https://github.com/nordicsemi/Android-Common-Libraries
 memfault = "2.0.2"     # https://github.com/nordicsemi/Android-Memfault-Library
 
 [libraries]
