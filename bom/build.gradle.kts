@@ -61,6 +61,8 @@ dependencies {
         api(libs.dfu)
         api(libs.mcumgr.core)
         api(libs.mcumgr.ble)
+        api(libs.mcumgr.ota)
+        api(libs.mcumgr.observability)
         api(libs.log)
         api(libs.log.timber)
         api(libs.kotlin.id)
