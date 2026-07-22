@@ -1,5 +1,5 @@
 [versions]
-blek = "2.0.0-beta03"  # https://github.com/nordicsemi/Kotlin-BLE-Library
+blek = "2.0.0-beta04"  # https://github.com/nordicsemi/Kotlin-BLE-Library
 ble = "2.11.0"         # https://github.com/nordicsemi/Android-BLE-Library
 dfu = "2.11.0"         # https://github.com/nordicsemi/Android-DFU-Library
 log = "2.5.0"          # https://github.com/nordicsemi/nRF-Logger-API
