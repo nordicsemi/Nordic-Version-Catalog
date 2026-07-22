@@ -1,5 +1,5 @@
 [versions]
-blek = "2.0.0-beta03"  # https://github.com/nordicsemi/Kotlin-BLE-Library
+blek = "2.0.0-beta04"  # https://github.com/nordicsemi/Kotlin-BLE-Library
 ble = "2.11.0"         # https://github.com/nordicsemi/Android-BLE-Library
 dfu = "2.11.0"         # https://github.com/nordicsemi/Android-DFU-Library
 log = "2.5.0"          # https://github.com/nordicsemi/nRF-Logger-API
@@ -7,7 +7,7 @@ util = "1.2.0"         # https://github.com/nordicsemi/Kotlin-Util-Library
 wifi = "1.3.0"         # https://github.com/nordicsemi/Android-nRF-Wi-Fi-Provisioner
 mcumgr = "3.3.1"       # https://github.com/nordicsemi/Android-nRF-Connect-Device-Manager
 scanner = "1.6.0"      # https://github.com/nordicsemi/Android-Scanner-Compat-Library
-common = "2.11.0"      # https://github.com/nordicsemi/Android-Common-Libraries
+common = "2.11.1"      # https://github.com/nordicsemi/Android-Common-Libraries
 memfault = "2.0.2"     # https://github.com/nordicsemi/Android-Memfault-Library
 
 [libraries]
