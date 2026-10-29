@@ -1,0 +1,130 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release, YYYY.MM.xx. Leave empty for the next one in this month.'
+        required: false
+        type: string
+        default: ''
+      dry-run:
+        description: 'Dry run'
+        required: false
+        type: boolean
+        default: false
+# Only one release at a time.
+concurrency:
+  group: release
+  cancel-in-progress: false
+permissions:
+  contents: read
+env:
+  # When true, nothing is tagged or published.
+  DRY_RUN: ${{ inputs.dry-run }}
+# The release is made in stages. Each one depends on the previous one, so the graph shows where
+# it failed. After fixing the problem, use "Re-run failed jobs" to continue from that stage.
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+    outputs:
+      # The version of the published BOM and version catalog.
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - id: version
+        shell: bash
+        run: |
+          if [[ "${{ github.ref_type }}" != "branch" ]]; then
+            echo "::error::Run this workflow on a branch: choose the branch in \"Use workflow from\"."
+            exit 1
+          fi
+          RELEASE_VERSION="${{ inputs.version }}"
+          if [[ -z "$RELEASE_VERSION" ]]; then
+            # The next version is YYYY.MM.xx, where xx is the number of the release in the month,
+            # starting from 00. It is one more than the highest existing tag of this month.
+            PREFIX="$(date -u +%Y.%m)"
+            LAST="$(gh api --paginate "repos/${{ github.repository }}/git/matching-refs/tags/$PREFIX." \
+              --jq '.[].ref' | sed 's|refs/tags/||' | grep -E "^${PREFIX//./\\.}\.[0-9]{2}$" | sort | tail -n 1 || true)"
+            if [[ -z "$LAST" ]]; then
+              RELEASE_VERSION="$PREFIX.00"
+            else
+              RELEASE_VERSION="$PREFIX.$(printf '%02d' $((10#${LAST##*.} + 1)))"
+            fi
+            echo "The next version is $RELEASE_VERSION."
+          fi
+          if [[ ! "$RELEASE_VERSION" =~ ^[0-9]{4}\.(0[1-9]|1[0-2])\.[0-9]{2}$ ]]; then
+            echo "::error::'$RELEASE_VERSION' is not a valid version, expected YYYY.MM.xx, e.g. 2026.09.00."
+            exit 1
+          fi
+          echo "version=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
+          if gh api "repos/${{ github.repository }}/git/ref/tags/$RELEASE_VERSION" > /dev/null 2>&1; then
+            # A dry run does not create the tag, so it may be run for a version that was released.
+            if [[ "$DRY_RUN" == "true" ]]; then
+              echo "::warning::The tag $RELEASE_VERSION already exists, it is ignored in a dry run."
+            else
+              echo "::error::The tag $RELEASE_VERSION already exists."
+              exit 1
+            fi
+          fi
+
+  tag:
+    name: Tag
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write # Push the tag.
+    env:
+      RELEASE_VERSION: ${{ needs.check.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+      - shell: bash
+        run: |
+          git tag "$RELEASE_VERSION"
+          if [[ "$DRY_RUN" == "true" ]]; then
+            echo "Dry run: the tag $RELEASE_VERSION is not pushed."
+          else
+            git push origin "refs/tags/$RELEASE_VERSION"
+          fi
+
+  publish:
+    name: Publish
+    needs: [check, tag]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      # A dry run does not create the tag, so it builds the commit that was selected.
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.dry-run && github.sha || format('refs/tags/{0}', needs.check.outputs.version) }}
+      - uses: actions/setup-java@v6
+        with:
+          distribution: 'jetbrains'
+          java-version: '21'
+      - shell: bash
+        env:
+          # The version of the published BOM and version catalog. It is used by build-logic.
+          RELEASE_VERSION: ${{ needs.check.outputs.version }}
+          # The following env variables are used by build.gradle.kts files
+          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+          # The following env variables are used by the root build.gradle.kts
+          OSSR_USERNAME: ${{ secrets.OSSR_USERNAME }}
+          OSSR_PASSWORD: ${{ secrets.OSSR_PASSWORD }}
+          SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
+        # The script generates sec.gpg file that is required by the signing configuration
+        # and runs the Gradle tasks. A dry run builds and signs the BOM and the version catalog
+        # into the local Maven repository of the runner, which checks the signing, but publishes
+        # nothing.
+        run: |
+          java --version
+          echo "${{ secrets.GPG_FILE }}" > sec.gpg.asc
+          gpg -d --passphrase "${{ secrets.GPG_FILE_PSWD }}" --batch sec.gpg.asc > sec.gpg
+          if [[ "$DRY_RUN" == "true" ]]; then
+            ./gradlew publishToMavenLocal
+          else
+            ./gradlew :bom:publishToSonatype :version-catalog:publishToSonatype closeAndReleaseSonatypeStagingRepository
+          fi
