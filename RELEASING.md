@@ -10,10 +10,11 @@ highest `xx` among the existing tags of that month, or uses `00` if there is non
 1. **Check** picks or validates the version, and that the tag does not exist yet.
 2. **Tag** creates the tag and pushes it.
 3. **Publish** signs and uploads both artifacts to Maven Central, and releases the staging repository.
+4. **GitHub release** creates a release for the tag with auto-generated notes, only after publishing succeeded.
 
-With **Dry run** ticked nothing is tagged or published: the artifacts are only built and signed into
-the local Maven repository of the runner (`./gradlew publishToMavenLocal`), which checks the signing
-key and the secrets.
+With **Dry run** ticked nothing is tagged, published or released: the artifacts are only built and
+signed into the local Maven repository of the runner (`./gradlew publishToMavenLocal`), which checks
+the signing key and the secrets. The last stage prints the release notes it would use.
 
 The **Deploy Nordic BOM** and **Deploy Nordic Version Catalog** workflows publish just one artifact,
 from the latest existing tag. They need the full git history.
