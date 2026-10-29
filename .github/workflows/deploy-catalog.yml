@@ -1,6 +1,8 @@
 name: Deploy Nordic Version Catalog to Maven Central
 on:
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   deployVersionCatalog:
     runs-on: ubuntu-26.04
