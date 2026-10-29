@@ -1,6 +1,8 @@
 name: Deploy Nordic BOM to Maven Central
 on:
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   deployBOM:
     runs-on: ubuntu-26.04
