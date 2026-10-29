@@ -26,7 +26,7 @@ env:
 jobs:
   check:
     name: Check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 5
     env:
       GH_TOKEN: ${{ github.token }}
@@ -73,7 +73,7 @@ jobs:
   tag:
     name: Tag
     needs: check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 5
     permissions:
       contents: write # Push the tag.
@@ -93,7 +93,7 @@ jobs:
   publish:
     name: Publish
     needs: [check, tag]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 45
     steps:
       # A dry run does not create the tag, so it builds the commit that was selected.
