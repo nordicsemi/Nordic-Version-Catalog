@@ -33,13 +33,8 @@ plugins {
     `version-catalog`
     `maven-publish`
     signing
+    id("nordic.git-version")
 }
-apply(from = "../gradle/git-tag-version.gradle")
-
-val getVersionNameFromTags: groovy.lang.Closure<String> by ext
-
-group = "no.nordicsemi.gradle"
-version = getVersionNameFromTags()
 
 catalog {
     versionCatalog {
