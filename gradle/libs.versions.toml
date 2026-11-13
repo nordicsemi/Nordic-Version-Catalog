@@ -1,13 +1,14 @@
 [versions]
-blek = "2.0.0-beta10"  # https://github.com/nordicsemi/Kotlin-BLE-Library
+blek = "2.0.0-beta11"  # https://github.com/nordicsemi/Kotlin-BLE-Library
 ble = "2.11.0"         # https://github.com/nordicsemi/Android-BLE-Library
 dfu = "2.11.0"         # https://github.com/nordicsemi/Android-DFU-Library
 log = "2.6.0"          # https://github.com/nordicsemi/nRF-Logger-API
 util = "1.2.0"         # https://github.com/nordicsemi/Kotlin-Util-Library
+mesh = "1.6.0"         # https://github.com/nordicsemi/Kotlin-Mesh-Library
 wifi = "1.3.0"         # https://github.com/nordicsemi/Android-nRF-Wi-Fi-Provisioner
-mcumgr = "3.5.0-alpha02" # https://github.com/nordicsemi/Android-nRF-Connect-Device-Manager
+mcumgr = "3.5.0-alpha03" # https://github.com/nordicsemi/Android-nRF-Connect-Device-Manager
 scanner = "1.6.0"      # https://github.com/nordicsemi/Android-Scanner-Compat-Library
-common = "2.12.1"      # https://github.com/nordicsemi/Android-Common-Libraries
+common = "2.12.2"      # https://github.com/nordicsemi/Android-Common-Libraries
 memfault = "2.0.2"     # https://github.com/nordicsemi/Android-Memfault-Library
 
 [libraries]
@@ -42,6 +43,16 @@ mcumgr-ble = { group = "no.nordicsemi.android", name = "mcumgr-ble", version.ref
 mcumgr-blek = { group = "no.nordicsemi.android", name = "mcumgr-ble2", version.ref = "mcumgr" }
 mcumgr-ota = { group = "no.nordicsemi.android", name = "ota", version.ref = "mcumgr" }
 mcumgr-observability = { group = "no.nordicsemi.android", name = "observability", version.ref = "mcumgr" }
+
+# Bluetooth Mesh Library
+mesh-core = { group = "no.nordicsemi.kotlin.mesh", name = "core", version.ref = "mesh" }
+mesh-crypto = { group = "no.nordicsemi.kotlin.mesh", name = "crypto", version.ref = "mesh" }
+mesh-bearer = { group = "no.nordicsemi.kotlin.mesh", name = "bearer", version.ref = "mesh" }
+mesh-bearer-gatt = { group = "no.nordicsemi.kotlin.mesh", name = "bearer-gatt", version.ref = "mesh" }
+mesh-bearer-pbgatt = { group = "no.nordicsemi.kotlin.mesh", name = "bearer-pbgatt", version.ref = "mesh" }
+mesh-bearer-provisioning = { group = "no.nordicsemi.kotlin.mesh", name = "bearer-provisioning", version.ref = "mesh" }
+mesh-provisioning = { group = "no.nordicsemi.kotlin.mesh", name = "provisioning", version.ref = "mesh" }
+mesh-logger = { group = "no.nordicsemi.kotlin.mesh", name = "logger", version.ref = "mesh" }
 
 # Logging
 log = { group = "no.nordicsemi.android", name = "log", version.ref = "log" }
